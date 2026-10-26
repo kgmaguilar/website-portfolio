@@ -380,7 +380,7 @@ function Contact() {
       <SectionHeading index="06" title="Contact" />
       <Reveal>
         <p className="contact-lead">
-          Have a project, an internship, or a data problem to solve?{' '}
+          Have a project, a job offer, or a data problem to solve?{' '}
           <span className="gradient-text">Let&apos;s talk.</span>
         </p>
         <div className="contact-actions">
