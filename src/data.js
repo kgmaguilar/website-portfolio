@@ -1,7 +1,7 @@
 // All portfolio content lives here. Edit this file to update the site.
 
 export const profile = {
-  name: 'Ken Gerard M. Aguilar',
+  name: 'Ken Aguilar',
   roles: ['Data Analyst', 'Frontend Developer', 'Machine Learning Developer'],
   tagline:
     'I turn messy data into clear dashboards, automate the boring workflows, and build responsive websites with React.',

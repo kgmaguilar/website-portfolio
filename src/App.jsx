@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import ParticleField from './ParticleField'
 import { useActiveSection, useCountUp, useInView, useTypewriter } from './hooks'
