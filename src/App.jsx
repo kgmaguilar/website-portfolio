@@ -11,6 +11,7 @@ import {
   sections,
   skills,
 } from './data'
+import photoSrc from './assets/photo.jpg'
 
 const YEAR = new Date().getFullYear()
 
@@ -122,6 +123,28 @@ function Navbar({ active }) {
 function Hero() {
   const typed = useTypewriter(profile.roles)
   const letters = profile.name.split('')
+  const [showPhoto, setShowPhoto] = useState(false)
+  const [fading, setFading] = useState(false)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFading(true)
+      setTimeout(() => {
+        setShowPhoto((prev) => !prev)
+        setFading(false)
+      }, 400)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const switchTo = (photo) => {
+    if (showPhoto === photo) return
+    setFading(true)
+    setTimeout(() => {
+      setShowPhoto(photo)
+      setFading(false)
+    }, 400)
+  }
 
   return (
     <section id="home" className="hero">
@@ -137,7 +160,7 @@ function Hero() {
               style={{ animationDelay: `${0.25 + i * 0.045}s` }}
               aria-hidden="true"
             >
-              {ch === ' ' ? ' ' : ch}
+              {ch === ' ' ? '\u00A0' : ch}
             </span>
           ))}
         </h1>
@@ -156,10 +179,10 @@ function Hero() {
         </div>
         <div className="hero-socials">
           <a href={profile.github} target="_blank" rel="noreferrer">
-            GitHub ↗
+            GitHub &#x2197;
           </a>
           <a href={profile.linkedin} target="_blank" rel="noreferrer">
-            LinkedIn ↗
+            LinkedIn &#x2197;
           </a>
         </div>
       </div>
@@ -167,26 +190,48 @@ function Hero() {
       <div className="hero-visual" aria-hidden="true">
         <div className="orb orb-a" />
         <div className="orb orb-b" />
-        <div className="code-window">
-          <div className="code-bar">
-            <i />
-            <i />
-            <i />
-            <span>ken.js</span>
-          </div>
-          <pre>
-            <code>
-              <span className="c-k">const</span> <span className="c-v">ken</span> = {'{'}
-              {'\n'}  <span className="c-p">degree</span>: <span className="c-s">&quot;BS Computer Science&quot;</span>,
-              {'\n'}  <span className="c-p">school</span>: <span className="c-s">&quot;UST&quot;</span>,
-              {'\n'}  <span className="c-p">focus</span>: [<span className="c-s">&quot;Data Science&quot;</span>,
-              {'\n'}           <span className="c-s">&quot;Web Dev&quot;</span>],
-              {'\n'}  <span className="c-p">dashboards</span>: <span className="c-s">&quot;Power BI&quot;</span>,
-              {'\n'}  <span className="c-p">frontend</span>: <span className="c-s">&quot;React&quot;</span>,
-              {'\n'}  <span className="c-p">research</span>: <span className="c-s">&quot;ELM-SVM&quot;</span>,
-              {'\n'}{'}'}
-            </code>
-          </pre>
+
+        <div className={`visual-switcher${fading ? ' fading' : ''}`}>
+          {showPhoto ? (
+            <div className="photo-frame">
+              <img src={photoSrc} alt="Ken Aguilar" className="hero-photo" />
+            </div>
+          ) : (
+            <div className="code-window">
+              <div className="code-bar">
+                <i />
+                <i />
+                <i />
+                <span>ken.js</span>
+              </div>
+              <pre>
+                <code>
+                  <span className="c-k">const</span> <span className="c-v">ken</span> = {'{'}
+                  {'\n'}  <span className="c-p">degree</span>: <span className="c-s">&quot;BS Computer Science&quot;</span>,
+                  {'\n'}  <span className="c-p">school</span>: <span className="c-s">&quot;UST&quot;</span>,
+                  {'\n'}  <span className="c-p">focus</span>: [<span className="c-s">&quot;Data Science&quot;</span>,
+                  {'\n'}           <span className="c-s">&quot;Web Dev&quot;</span>],
+                  {'\n'}  <span className="c-p">dashboards</span>: <span className="c-s">&quot;Power BI&quot;</span>,
+                  {'\n'}  <span className="c-p">frontend</span>: <span className="c-s">&quot;React&quot;</span>,
+                  {'\n'}  <span className="c-p">research</span>: <span className="c-s">&quot;ELM-SVM&quot;</span>,
+                  {'\n'}{'}'}
+                </code>
+              </pre>
+            </div>
+          )}
+        </div>
+
+        <div className="visual-dots">
+          <button
+            className={`visual-dot${!showPhoto ? ' active' : ''}`}
+            onClick={() => switchTo(false)}
+            aria-label="Show code window"
+          />
+          <button
+            className={`visual-dot${showPhoto ? ' active' : ''}`}
+            onClick={() => switchTo(true)}
+            aria-label="Show photo"
+          />
         </div>
       </div>
 
@@ -272,7 +317,7 @@ function Experience() {
                   <h3>{job.role}</h3>
                   <p className="job-company">
                     {job.company}
-                    {job.location && <span> · {job.location}</span>}
+                    {job.location && <span> &middot; {job.location}</span>}
                   </p>
                 </div>
                 <span className="period">{job.period}</span>
@@ -346,7 +391,7 @@ function Education() {
             <span className="period">{education.period}</span>
           </div>
           <p className="job-team">
-            Specialization: {education.specialization} · {education.location}
+            Specialization: {education.specialization} &middot; {education.location}
           </p>
           <p className="coursework-label">Relevant coursework</p>
           <ul className="chips small">
@@ -388,15 +433,15 @@ function Contact() {
             Email me
           </a>
           <button className="btn btn-ghost" onClick={copyEmail}>
-            {copied ? 'Copied ✓' : profile.email}
+            {copied ? 'Copied \u2713' : profile.email}
           </button>
         </div>
         <div className="hero-socials center">
           <a href={profile.github} target="_blank" rel="noreferrer">
-            GitHub ↗
+            GitHub &#x2197;
           </a>
           <a href={profile.linkedin} target="_blank" rel="noreferrer">
-            LinkedIn ↗
+            LinkedIn &#x2197;
           </a>
         </div>
       </Reveal>
@@ -445,7 +490,7 @@ export default function App() {
       </main>
       <footer className="footer">
         <p>
-          © {YEAR} {profile.name} · Built with React &amp; Vite
+          &copy; {YEAR} {profile.name} &middot; Built with React &amp; Vite
         </p>
       </footer>
     </>

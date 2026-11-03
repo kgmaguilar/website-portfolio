@@ -399,13 +399,12 @@ main,
 
 .code-window {
   position: relative;
-  width: min(100%, 420px);
+  width: 100%;
   border-radius: 16px;
   background: rgba(10, 12, 24, 0.82);
   border: 1px solid var(--border);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
-  animation: float 6s ease-in-out infinite;
 }
 .code-bar {
   display: flex;
@@ -722,6 +721,60 @@ main,
   font-size: 0.8rem;
   color: var(--muted);
   border-top: 1px solid var(--border);
+}
+
+/* ---------- visual switcher (hero) ---------- */
+.visual-switcher {
+  position: relative;
+  width: min(100%, 420px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  animation: float 6s ease-in-out infinite;
+}
+.visual-switcher.fading {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+/* photo frame */
+.photo-frame {
+  position: relative;
+  border-radius: 20px;
+  padding: 4px;
+  background: conic-gradient(from var(--angle, 0deg), var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+  animation: spin 6s linear infinite;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+.hero-photo {
+  display: block;
+  width: 100%;
+  border-radius: 17px;
+  object-fit: cover;
+  aspect-ratio: 4 / 5;
+}
+
+/* dot indicators */
+.visual-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+.visual-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--border);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s, transform 0.3s;
+}
+.visual-dot.active {
+  background: var(--gradient);
+  transform: scale(1.35);
+}
+.visual-dot:hover:not(.active) {
+  background: var(--muted);
 }
 
 /* ---------- keyframes ---------- */
