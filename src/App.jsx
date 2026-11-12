@@ -120,31 +120,42 @@ function Navbar({ active }) {
   )
 }
 
+/* ---------- company / research logos ---------- */
+
+function CompanyLogo({ logoSrc, logoKey, company }) {
+  // If an imported image source is provided, render the image
+  if (logoSrc) {
+    return (
+      <img
+        src={logoSrc}
+        alt={company}
+        className="company-logo-img"
+        onError={(e) => {
+          e.currentTarget.style.display = 'none'
+        }}
+      />
+    )
+  }
+
+  if (logoKey === 'research') {
+    // Flask / science icon
+    return (
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-label="Research">
+        <path d="M9 3h6" />
+        <path d="M9 3v5.5L5.5 15A4 4 0 0 0 9 21h6a4 4 0 0 0 3.5-6L15 8.5V3" />
+        <circle cx="9.5" cy="16" r="0.8" fill="#22d3ee" stroke="none" />
+        <circle cx="13" cy="14" r="0.6" fill="#22d3ee" stroke="none" />
+        <circle cx="11" cy="17.5" r="0.5" fill="#22d3ee" stroke="none" />
+      </svg>
+    )
+  }
+
+  return null
+}
+
 function Hero() {
   const typed = useTypewriter(profile.roles)
   const letters = profile.name.split('')
-  const [showPhoto, setShowPhoto] = useState(false)
-  const [fading, setFading] = useState(false)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFading(true)
-      setTimeout(() => {
-        setShowPhoto((prev) => !prev)
-        setFading(false)
-      }, 400)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [])
-
-  const switchTo = (photo) => {
-    if (showPhoto === photo) return
-    setFading(true)
-    setTimeout(() => {
-      setShowPhoto(photo)
-      setFading(false)
-    }, 400)
-  }
 
   return (
     <section id="home" className="hero">
@@ -191,47 +202,31 @@ function Hero() {
         <div className="orb orb-a" />
         <div className="orb orb-b" />
 
-        <div className={`visual-switcher${fading ? ' fading' : ''}`}>
-          {showPhoto ? (
-            <div className="photo-frame">
-              <img src={photoSrc} alt="Ken Aguilar" className="hero-photo" />
+        <div className="dual-visual">
+          <div className="photo-frame dual-photo">
+            <img src={photoSrc} alt="Ken Aguilar" className="hero-photo" />
+          </div>
+          <div className="code-window dual-code">
+            <div className="code-bar">
+              <i />
+              <i />
+              <i />
+              <span>ken.js</span>
             </div>
-          ) : (
-            <div className="code-window">
-              <div className="code-bar">
-                <i />
-                <i />
-                <i />
-                <span>ken.js</span>
-              </div>
-              <pre>
-                <code>
-                  <span className="c-k">const</span> <span className="c-v">ken</span> = {'{'}
-                  {'\n'}  <span className="c-p">degree</span>: <span className="c-s">&quot;BS Computer Science&quot;</span>,
-                  {'\n'}  <span className="c-p">school</span>: <span className="c-s">&quot;UST&quot;</span>,
-                  {'\n'}  <span className="c-p">focus</span>: [<span className="c-s">&quot;Data Science&quot;</span>,
-                  {'\n'}           <span className="c-s">&quot;Web Dev&quot;</span>],
-                  {'\n'}  <span className="c-p">dashboards</span>: <span className="c-s">&quot;Power BI&quot;</span>,
-                  {'\n'}  <span className="c-p">frontend</span>: <span className="c-s">&quot;React&quot;</span>,
-                  {'\n'}  <span className="c-p">research</span>: <span className="c-s">&quot;ELM-SVM&quot;</span>,
-                  {'\n'}{'}'}
-                </code>
-              </pre>
-            </div>
-          )}
-        </div>
-
-        <div className="visual-dots">
-          <button
-            className={`visual-dot${!showPhoto ? ' active' : ''}`}
-            onClick={() => switchTo(false)}
-            aria-label="Show code window"
-          />
-          <button
-            className={`visual-dot${showPhoto ? ' active' : ''}`}
-            onClick={() => switchTo(true)}
-            aria-label="Show photo"
-          />
+            <pre>
+              <code>
+                <span className="c-k">const</span> <span className="c-v">ken</span> = {'{'}
+                {'\n'}  <span className="c-p">degree</span>: <span className="c-s">&quot;BS Computer Science&quot;</span>,
+                {'\n'}  <span className="c-p">school</span>: <span className="c-s">&quot;UST&quot;</span>,
+                {'\n'}  <span className="c-p">focus</span>: [<span className="c-s">&quot;Data Science&quot;</span>,
+                {'\n'}           <span className="c-s">&quot;Web Dev&quot;</span>],
+                {'\n'}  <span className="c-p">dashboards</span>: <span className="c-s">&quot;Power BI&quot;</span>,
+                {'\n'}  <span className="c-p">frontend</span>: <span className="c-s">&quot;React&quot;</span>,
+                {'\n'}  <span className="c-p">research</span>: <span className="c-s">&quot;ELM-SVM&quot;</span>,
+                {'\n'}{'}'}
+              </code>
+            </pre>
+          </div>
         </div>
       </div>
 
@@ -313,12 +308,19 @@ function Experience() {
             <span className="timeline-dot" />
             <TiltCard className="job-card">
               <div className="job-top">
-                <div>
-                  <h3>{job.role}</h3>
-                  <p className="job-company">
-                    {job.company}
-                    {job.location && <span> &middot; {job.location}</span>}
-                  </p>
+                <div className="job-info">
+                  {(job.logoSrc || job.logoKey) && (
+                    <div className="job-logo">
+                      <CompanyLogo logoSrc={job.logoSrc} logoKey={job.logoKey} company={job.company} />
+                    </div>
+                  )}
+                  <div>
+                    <h3>{job.role}</h3>
+                    <p className="job-company">
+                      {job.company}
+                      {job.location && <span> &middot; {job.location}</span>}
+                    </p>
+                  </div>
                 </div>
                 <span className="period">{job.period}</span>
               </div>
@@ -351,9 +353,14 @@ function Research() {
         <div className="glow-border">
           <TiltCard className="research-card">
             <div className="job-top">
-              <div>
-                <h3>{research.title}</h3>
-                <p className="job-company">{research.subtitle}</p>
+              <div className="job-info">
+                <div className="job-logo">
+                  <CompanyLogo logoKey="research" company="Research" />
+                </div>
+                <div>
+                  <h3>{research.title}</h3>
+                  <p className="job-company">{research.subtitle}</p>
+                </div>
               </div>
               <span className="period">{research.period}</span>
             </div>

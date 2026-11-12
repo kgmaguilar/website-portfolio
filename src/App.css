@@ -399,7 +399,6 @@ main,
 
 .code-window {
   position: relative;
-  width: 100%;
   border-radius: 16px;
   background: rgba(10, 12, 24, 0.82);
   border: 1px solid var(--border);
@@ -572,7 +571,38 @@ main,
   color: var(--accent-2);
 }
 
-/* ---------- experience / research / education ---------- */
+/* ---------- job logo ---------- */
+.job-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.job-logo {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.tilt-card:hover .job-logo {
+  border-color: rgba(124, 140, 255, 0.4);
+}
+
+.company-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px; 
+}
+
+/* ---------- job card ---------- */
 .timeline {
   position: relative;
   display: grid;
@@ -723,16 +753,51 @@ main,
   border-top: 1px solid var(--border);
 }
 
-/* ---------- visual switcher (hero) ---------- */
-.visual-switcher {
+/* ---------- dual visual (hero) ---------- */
+.dual-visual {
   position: relative;
-  width: min(100%, 420px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  animation: float 6s ease-in-out infinite;
+  width: 100%;
+  height: 420px;
 }
-.visual-switcher.fading {
-  opacity: 0;
-  transform: scale(0.96);
+
+/* photo — top-left, floats slower */
+.dual-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56%;
+  z-index: 2;
+  animation: float 7s ease-in-out infinite;
+  transition: filter 0.35s ease;
+  cursor: pointer;
+}
+
+/* code window — bottom-right, floats a beat later */
+.dual-code {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 72%;
+  z-index: 1;
+  animation: float 6s ease-in-out 1.2s infinite;
+  transition: filter 0.35s ease;
+  cursor: pointer;
+}
+
+/* hovered card comes to the front with a glowing lift */
+.dual-photo:hover {
+  z-index: 4;
+  filter: drop-shadow(0 24px 48px rgba(124, 140, 255, 0.5));
+}
+.dual-code:hover {
+  z-index: 4;
+  filter: drop-shadow(0 24px 48px rgba(34, 211, 238, 0.4));
+}
+
+/* the card NOT being hovered dims back */
+.dual-visual:has(.dual-photo:hover) .dual-code,
+.dual-visual:has(.dual-code:hover) .dual-photo {
+  filter: brightness(0.55);
 }
 
 /* photo frame */
@@ -859,11 +924,12 @@ main,
     text-align: left;
   }
   .hero-visual {
-    display: none;
+    display: grid;
+    place-items: center;
   }
-  .about-grid,
-  .skills-grid {
-    grid-template-columns: 1fr;
+  .dual-visual {
+    height: 340px;
+    max-width: 420px;
   }
   .scroll-hint {
     display: none;
@@ -873,6 +939,10 @@ main,
 @media (max-width: 760px) {
   .menu-toggle {
     display: block;
+  }
+  .about-grid,
+  .skills-grid {
+    grid-template-columns: 1fr;
   }
   .nav-links {
     position: absolute;

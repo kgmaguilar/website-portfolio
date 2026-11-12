@@ -1,4 +1,7 @@
-// All portfolio content lives here. Edit this file to update the site.
+﻿// All portfolio content lives here. Edit this file to update the site.
+import dhlLogo from './assets/dhl-logo.png'
+import quantumLogo from './assets/quantum-logo.png'
+
 
 export const profile = {
   name: 'Ken Aguilar',
@@ -48,6 +51,7 @@ export const skills = [
 export const experience = [
   {
     company: 'DHL Express Philippines',
+    logoSrc: dhlLogo,
     role: 'Data Analyst Intern',
     team: 'First Choice Team',
     location: 'Makati City, NCR',
@@ -61,6 +65,7 @@ export const experience = [
   },
   {
     company: 'Quantum Review Center',
+    logoSrc: quantumLogo,
     role: 'Frontend Developer',
     team: 'Quantum Review Center Website',
     location: '',
