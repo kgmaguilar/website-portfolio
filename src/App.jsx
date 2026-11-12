@@ -509,7 +509,7 @@ export default function App() {
       </main>
       <footer className="footer">
         <p>
-          &copy; {YEAR} {profile.name} &middot; Built with React &amp; Vite
+          &copy; {YEAR} {profile.name}
         </p>
       </footer>
     </>
