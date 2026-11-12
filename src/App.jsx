@@ -307,13 +307,23 @@ function Experience() {
           <Reveal key={job.company} delay={i * 120} className="timeline-item">
             <span className="timeline-dot" />
             <TiltCard className="job-card">
-              <div className="job-top">
-                <div className="job-info">
-                  {(job.logoSrc || job.logoKey) && (
-                    <div className="job-logo">
-                      <CompanyLogo logoSrc={job.logoSrc} logoKey={job.logoKey} company={job.company} />
-                    </div>
-                  )}
+              {/* NEW: Wrapper for the header section */}
+              <div className="job-header-banner">
+                
+                {/* Background Watermark Logo */}
+                {(job.logoSrc || job.logoKey) && (
+                  <div 
+                    className="job-bg-logo" 
+                    aria-hidden="true"
+                    /* THIS IS THE NEW LINE: Applies the color from data.js */
+                    style={{ backgroundColor: job.brandColor }} 
+                  >
+                    <CompanyLogo logoSrc={job.logoSrc} logoKey={job.logoKey} company={job.company} />
+                  </div>
+                )}
+
+                {/* Foreground Text */}
+                <div className="job-top">
                   <div>
                     <h3>{job.role}</h3>
                     <p className="job-company">
@@ -321,10 +331,12 @@ function Experience() {
                       {job.location && <span> &middot; {job.location}</span>}
                     </p>
                   </div>
+                  <span className="period">{job.period}</span>
                 </div>
-                <span className="period">{job.period}</span>
+                <p className="job-team">{job.team}</p>
+                
               </div>
-              <p className="job-team">{job.team}</p>
+
               <ul className="bullets">
                 {job.bullets.map((b) => (
                   <li key={b}>{b}</li>

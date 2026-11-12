@@ -578,28 +578,48 @@ main,
   gap: 14px;
 }
 
-.job-logo {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  border-radius: 11px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  transition: border-color 0.3s;
+/* Add this to restrict the logo strictly to the header section */
+.job-header-banner {
+  position: relative;
+  z-index: 1;
+  overflow: hidden; /* Clips the background logo so it doesn't bleed out of this container */
+  margin-bottom: 16px;
 }
 
-.tilt-card:hover .job-logo {
-  border-color: rgba(124, 140, 255, 0.4);
-}
-
-.company-logo-img {
+/* Centers the container perfectly behind the text */
+.job-bg-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  padding: 6px; 
+  
+  opacity: 0.15; 
+  z-index: -1;
+  pointer-events: none;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  
+  /* OPTIONAL: Fades the background color and logo so it blends 
+     smoothly into the dark card on the left side */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 70%);
+  mask-image: linear-gradient(to right, transparent 0%, black 70%);
+  border-radius: 14px;
+}
+
+/* Controls the actual image scaling inside the restricted section */
+.job-bg-logo img, 
+.job-bg-logo svg {
+  width: 100%;
+  height: 100%;
+  
+  /* Ensures the entire logo is visible, centered, and scaled properly without distortion */
+  object-fit: contain; 
+  
+  /* Prevents the logo from getting awkwardly tall if the section expands */
+  max-height: 120px; 
 }
 
 /* ---------- job card ---------- */

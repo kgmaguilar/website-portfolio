@@ -52,6 +52,7 @@ export const experience = [
   {
     company: 'DHL Express Philippines',
     logoSrc: dhlLogo,
+    brandColor: '#ffcc00',
     role: 'Data Analyst Intern',
     team: 'First Choice Team',
     location: 'Makati City, NCR',
@@ -66,6 +67,7 @@ export const experience = [
   {
     company: 'Quantum Review Center',
     logoSrc: quantumLogo,
+    brandColor: '#ffffff',
     role: 'Frontend Developer',
     team: 'Quantum Review Center Website',
     location: '',
